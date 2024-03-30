@@ -1,8 +1,8 @@
 import express from "express";
-import { createFile } from "../controllers/filesControllers.js";
+import {createFile, getFileInfo, getFiles} from "../controllers/filesControllers.js";
 import { createFileSchema } from "../schemas/filesSchemas.js";
 import validateBody from "../helpers/validateBody.js";
-import { checkExtention } from "../middleWares/checkExtention";
+import { checkExtention } from "../middleWares/checkExtention.js";
 
 const filesRouter = express.Router();
 
@@ -16,8 +16,12 @@ filesRouter.post(
   "/",
   validateBody(createFileSchema),
   checkExtention,
-  createFile
+  createFile,
 );
+
+filesRouter.get("/", getFiles);
+
+filesRouter.get("/:filename", getFileInfo)
 
 // contactsRouter.put("/:id", updateContact);
 
